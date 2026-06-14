@@ -34,3 +34,49 @@ python -m producers.temperature_sensor
 - Multiple producers
 - Multiple consumers
 - Event-driven architecture
+
+Project architecture--
+
+kafka-smart-home/
+│
+├── common/
+│   └── event_schema.py
+│
+├── producers/
+│   ├── temperature_sensor.py
+│   ├── motion_sensor.py
+│   └── door_sensor.py
+│
+├── consumers/
+│   ├── security_service.py
+│   ├── climate_service.py
+│   └── logger_service.py
+│
+├── scripts/
+│   └── create_topics.sh
+│
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+
+
+
+---------------
+
+List of Events sent to kafka
+
+        ┌────────────────────┐
+        │  IoT Sensors       │
+        │────────────────────│
+        │ Temperature Sensor │
+        │ Motion Sensor      │
+        │ Door Sensor        │
+        └─────────┬──────────┘
+                  │
+                  ▼
+        Kafka Topic: smart-home-events
+                  │
+   ┌──────────────┼──────────────┐
+   ▼              ▼              ▼
+Security      Climate       Logger
+Service       Service       Service
